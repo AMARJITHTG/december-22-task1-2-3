@@ -1,0 +1,576 @@
+###############################################################
+#                          WARNING!!!!                        #
+# This is a sandbox environment. Using personal credentials   #
+# is HIGHLY! discouraged. Any consequences of doing so are    #
+# completely the user's responsibilites.                      #
+#                                                             #
+# The PWD team.                                               #
+###############################################################
+[node1] (local) root@192.168.0.8 ~
+$ git clone https://github.com/dockersamples/linux_tweet_app
+Cloning into 'linux_tweet_app'...
+remote: Enumerating objects: 14, done.
+remote: Total 14 (delta 0), reused 0 (delta 0), pack-reused 14
+Receiving objects: 100% (14/14), 10.76 KiB | 10.76 MiB/s, done.
+Resolving deltas: 100% (5/5), done.
+[node1] (local) root@192.168.0.8 ~
+$ docker container run alpine hostname
+Unable to find image 'alpine:latest' locally
+latest: Pulling from library/alpine
+59bf1c3509f3: Pull complete
+Digest: sha256:21a3deaa0d32a8057914f36584b5288d2e5ecc984380bc0118285c70fa8c9300
+Status: Downloaded newer image for alpine:latest
+a15db6bf8165
+[node1] (local) root@192.168.0.8 ~
+$  docker container ls --all
+CONTAINER ID   IMAGE     COMMAND      CREATED         STATUS              PORTS     NAMES
+a15db6bf8165   alpine    "hostname"   5 seconds ago   Exited (0) 3seconds ago             awesome_black
+[node1] (local) root@192.168.0.8 ~
+$ docker container ls --all
+CONTAINER ID   IMAGE     COMMAND      CREATED          STATUS                PORTS     NAMES
+a15db6bf8165   alpine    "hostname"   13 seconds ago   Exited (0) 12 seconds ago             awesome_black
+[node1] (local) root@192.168.0.8 ~
+$  docker container run --interactive --tty --rm ubuntu bash
+Unable to find image 'ubuntu:latest' locally
+latest: Pulling from library/ubuntu
+7b1a6ab2e44d: Pull complete
+Digest: sha256:626ffe58f6e7566e00254b638eb7e0f3b11d4da9675088f4781a50ae288f3322
+Status: Downloaded newer image for ubuntu:latest
+root@cd239b35b292:/# ls /
+bin   dev  home  lib32  libx32  mnt  proc  run   srv  tmp  var
+boot  etc  lib   lib64  media   opt  root  sbin  sys  usr
+root@cd239b35b292:/# ls /
+bin   dev  home  lib32  libx32  mnt  proc  run   srv  tmp  var
+boot  etc  lib   lib64  media   opt  root  sbin  sys  usr
+root@cd239b35b292:/# ps aux
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root         1  0.2  0.0   4108  3464 pts/0    Ss   04:24   0:00 bash
+root        12  0.0  0.0   5896  2864 pts/0    R+   04:24   0:00 ps aux
+root@cd239b35b292:/# cat /etc/issue
+Ubuntu 20.04.3 LTS \n \l
+
+root@cd239b35b292:/#  exit
+exit
+[node1] (local) root@192.168.0.8 ~
+$ exit
+logout
+###############################################################
+#                          WARNING!!!!                        #
+# This is a sandbox environment. Using personal credentials   #
+# is HIGHLY! discouraged. Any consequences of doing so are    #
+# completely the user's responsibilites.                      #
+#                                                             #
+# The PWD team.                                               #
+###############################################################
+[node1] (local) root@192.168.0.8 ~
+$ cat /etc/issue
+Welcome to Alpine Linux 3.12
+Kernel \r on an \m (\l)
+
+[node1] (local) root@192.168.0.8 ~
+$ docker container run \
+>  --detach \
+>  --name mydb \
+>  -e MYSQL_ROOT_PASSWORD=my-secret-pw \
+>  mysql:latest
+Unable to find image 'mysql:latest' locally
+latest: Pulling from library/mysql
+72a69066d2fe: Pull complete
+93619dbc5b36: Pull complete
+99da31dd6142: Pull complete
+626033c43d70: Pull complete
+37d5d7efb64e: Pull complete
+ac563158d721: Pull complete
+d2ba16033dad: Pull complete
+688ba7d5c01a: Pull complete
+00e060b6d11d: Pull complete
+1c04857f594f: Pull complete
+4d7cfa90e6ea: Pull complete
+e0431212d27d: Pull complete
+Digest: sha256:e9027fe4d91c0153429607251656806cc784e914937271037f7738bd5b8e7709
+Status: Downloaded newer image for mysql:latest
+6c64f225a8bcee853e442e40e00c5196062ab97f3d400f17a01aea1f0b5fe6df
+[node1] (local) root@192.168.0.8 ~
+$  docker container ls
+CONTAINER ID   IMAGE          COMMAND                  CREATED    STATUS         PORTS                 NAMES
+6c64f225a8bc   mysql:latest   "docker-entrypoint.s…"   2 seconds ago   Up 2 seconds   3306/tcp, 33060/tcp   mydb
+[node1] (local) root@192.168.0.8 ~
+$ docker container ls
+CONTAINER ID   IMAGE          COMMAND                  CREATED    STATUS         PORTS                 NAMES
+6c64f225a8bc   mysql:latest   "docker-entrypoint.s…"   9 seconds ago   Up 8 seconds   3306/tcp, 33060/tcp   mydb
+[node1] (local) root@192.168.0.8 ~
+$ docker container logs mydb
+2021-12-22 04:25:48+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.0.27-1debian10 started.
+2021-12-22 04:25:48+00:00 [Note] [Entrypoint]: Switching to dedicated user 'mysql'
+2021-12-22 04:25:48+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.0.27-1debian10 started.
+2021-12-22 04:25:48+00:00 [Note] [Entrypoint]: Initializing database files
+2021-12-22T04:25:48.745209Z 0 [System] [MY-013169] [Server] /usr/sbin/mysqld (mysqld 8.0.27) initializing of server in progress as process 42
+2021-12-22T04:25:48.754975Z 1 [System] [MY-013576] [InnoDB] InnoDBinitialization has started.
+2021-12-22T04:25:49.122176Z 1 [System] [MY-013577] [InnoDB] InnoDBinitialization has ended.
+2021-12-22T04:25:50.185314Z 0 [Warning] [MY-013746] [Server] A deprecated TLS version TLSv1 is enabled for channel mysql_main
+2021-12-22T04:25:50.185403Z 0 [Warning] [MY-013746] [Server] A deprecated TLS version TLSv1.1 is enabled for channel mysql_main
+2021-12-22T04:25:50.262282Z 6 [Warning] [MY-010453] [Server] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
+2021-12-22 04:25:53+00:00 [Note] [Entrypoint]: Database files initialized
+2021-12-22 04:25:53+00:00 [Note] [Entrypoint]: Starting temporary server
+2021-12-22T04:25:53.563799Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.27) starting as process 91
+2021-12-22T04:25:53.593609Z 1 [System] [MY-013576] [InnoDB] InnoDBinitialization has started.
+2021-12-22T04:25:53.812670Z 1 [System] [MY-013577] [InnoDB] InnoDBinitialization has ended.
+2021-12-22T04:25:54.088103Z 0 [Warning] [MY-013746] [Server] A deprecated TLS version TLSv1 is enabled for channel mysql_main
+2021-12-22T04:25:54.088163Z 0 [Warning] [MY-013746] [Server] A deprecated TLS version TLSv1.1 is enabled for channel mysql_main
+2021-12-22T04:25:54.089905Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2021-12-22T04:25:54.090066Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2021-12-22T04:25:54.092041Z 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in thepath is accessible to all OS users. Consider choosing a different directory.
+2021-12-22T04:25:54.124832Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Socket: /var/run/mysqld/mysqlx.sock
+2021-12-22T04:25:54.124958Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.27'  socket: '/var/run/mysqld/mysqld.sock'  port: 0  MySQL Community Server - GPL.
+2021-12-22 04:25:54+00:00 [Note] [Entrypoint]: Temporary server started.
+Warning: Unable to load '/usr/share/zoneinfo/iso3166.tab' as time zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/leap-seconds.list' astime zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/zone.tab' as time zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/zone1970.tab' as timezone. Skipping it.
+
+2021-12-22 04:25:58+00:00 [Note] [Entrypoint]: Stopping temporary server
+2021-12-22T04:25:58.076945Z 10 [System] [MY-013172] [Server] Received SHUTDOWN from user root. Shutting down mysqld (Version: 8.0.27).
+2021-12-22T04:25:59.634214Z 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.27)  MySQL Community Server - GPL.
+2021-12-22 04:26:00+00:00 [Note] [Entrypoint]: Temporary server stopped
+
+2021-12-22 04:26:00+00:00 [Note] [Entrypoint]: MySQL init process done. Ready for start up.
+
+2021-12-22T04:26:00.430135Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.27) starting as process 1
+2021-12-22T04:26:00.442881Z 1 [System] [MY-013576] [InnoDB] InnoDBinitialization has started.
+2021-12-22T04:26:00.684637Z 1 [System] [MY-013577] [InnoDB] InnoDBinitialization has ended.
+2021-12-22T04:26:00.976570Z 0 [Warning] [MY-013746] [Server] A deprecated TLS version TLSv1 is enabled for channel mysql_main
+2021-12-22T04:26:00.976625Z 0 [Warning] [MY-013746] [Server] A deprecated TLS version TLSv1.1 is enabled for channel mysql_main
+2021-12-22T04:26:00.977849Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2021-12-22T04:26:00.977923Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2021-12-22T04:26:00.979690Z 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in thepath is accessible to all OS users. Consider choosing a different directory.
+2021-12-22T04:26:01.015659Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Bind-address: '::' port: 33060, socket: /var/run/mysqld/mysqlx.sock
+2021-12-22T04:26:01.016070Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.27'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server - GPL.
+[node1] (local) root@192.168.0.8 ~
+$ docker container top mydb
+PID                 USER                TIME                COMMAND
+729                 999                 0:01                mysqld
+[node1] (local) root@192.168.0.8 ~
+$ docker exec -it mydb \
+>  mysql --user=root --password=$MYSQL_ROOT_PASSWORD --version
+mysql: [Warning] Using a password on the command line interface can be insecure.
+mysql  Ver 8.0.27 for Linux on x86_64 (MySQL Community Server - GPL)
+[node1] (local) root@192.168.0.8 ~
+$ docker exec -it mydb sh
+# mysql --user=root --password=$MYSQL_ROOT_PASSWORD --version
+mysql: [Warning] Using a password on the command line interface can be insecure.
+mysql  Ver 8.0.27 for Linux on x86_64 (MySQL Community Server - GPL)
+#  exit
+[node1] (local) root@192.168.0.8 ~
+$ cd ~/linux_tweet_app
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$ cat Dockerfile
+FROM nginx:latest
+
+COPY index.html /usr/share/nginx/html
+COPY linux.png /usr/share/nginx/html
+
+EXPOSE 80 443
+
+CMD ["nginx", "-g", "daemon off;"]
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$  echo $DOCKERID
+
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$  echo $DOCKERID
+
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$  echo $DOCKERID
+
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$  echo $DOCKERID
+
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$ echo amarjithtg
+amarjithtg
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$ docker image build --tag $DOCKERID/linux_tweet_app:1.0 .
+invalid argument "/linux_tweet_app:1.0" for "-t, --tag" flag: invalid reference format
+See 'docker image build --help'.
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$ docker container run \
+>  --detach \
+>  --publish 80:80 \
+>  --name linux_tweet_app \
+>  $DOCKERID/linux_tweet_app:1.0
+docker: invalid reference format.
+See 'docker run --help'.
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$ docker container rm --force linux_tweet_app
+Error: No such container: linux_tweet_app
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$  docker container run \
+>  --detach \
+>  --publish 80:80 \
+>  --name linux_tweet_app \
+>  --mount type=bind,source="$(pwd)",target=/usr/share/nginx/html \
+>  $DOCKERID/linux_tweet_app:1.0
+docker: invalid reference format.
+See 'docker run --help'.
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$ cp index-new.html index.html
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$  docker rm --force linux_tweet_app
+Error: No such container: linux_tweet_app
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$  docker rm --force linux_tweet_app
+Error: No such container: linux_tweet_app
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$ docker rm --force linux_tweet_app
+Error: No such container: linux_tweet_app
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$  docker container run \
+>  --detach \
+>  --publish 80:80 \
+>  --name linux_tweet_app \
+>  $DOCKERID/linux_tweet_app:1.0
+docker: invalid reference format.
+See 'docker run --help'.
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$ docker container run \
+>  --detach \
+>  --publish 80:80 \
+>  --name linux_tweet_app \
+>  $DOCKERID/linux_tweet_app:1.0
+docker: invalid reference format.
+See 'docker run --help'.
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$ docker rm --force linux_tweet_app
+Error: No such container: linux_tweet_app
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$ docker image build --tag $DOCKERID/linux_tweet_app:2.0 .
+invalid argument "/linux_tweet_app:2.0" for "-t, --tag" flag: invalid reference format
+See 'docker image build --help'.
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$ docker image ls
+REPOSITORY   TAG       IMAGE ID       CREATED        SIZE
+mysql        latest    3218b38490ce   26 hours ago   516MB
+alpine       latest    c059bfaa849c   3 weeks ago    5.59MB
+ubuntu       latest    ba6acccedd29   2 months ago   72.8MB
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$ docker container run \
+>  --detach \
+>  --publish 80:80 \
+>  --name linux_tweet_app \
+>  $DOCKERID/linux_tweet_app:2.0
+docker: invalid reference format.
+See 'docker run --help'.
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$ docker container run \
+>  --detach \
+>  --publish 8080:80 \
+>  --name old_linux_tweet_app \
+>  $DOCKERID/linux_tweet_app:1.0
+docker: invalid reference format.
+See 'docker run --help'.
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$ docker image ls -f reference="$DOCKERID/*"
+REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$ docker login
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
+Username: amarjithtg
+Password:
+Error response from daemon: Get https://registry-1.docker.io/v2/: unauthorized: incorrect username or password
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$ docker image push $DOCKERID/linux_tweet_app:1.0
+invalid reference format
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$ docker image push $DOCKERID/linux_tweet_app:2.0
+invalid reference format
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$  docker login
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
+Username: amarjithtg
+Password: ###############################################################
+#                          WARNING!!!!                        #
+# This is a sandbox environment. Using personal credentials   #
+# is HIGHLY! discouraged. Any consequences of doing so are    #
+# completely the user's responsibilites.                      #
+#                                                             #
+# The PWD team.                                               #
+###############################################################
+[node1] (local) root@192.168.0.8 ~
+$ git clone https://github.com/dockersamples/linux_tweet_app
+Cloning into 'linux_tweet_app'...
+remote: Enumerating objects: 14, done.
+remote: Total 14 (delta 0), reused 0 (delta 0), pack-reused 14
+Receiving objects: 100% (14/14), 10.76 KiB | 10.76 MiB/s, done.
+Resolving deltas: 100% (5/5), done.
+[node1] (local) root@192.168.0.8 ~
+$ docker container run alpine hostname
+Unable to find image 'alpine:latest' locally
+latest: Pulling from library/alpine
+59bf1c3509f3: Pull complete
+Digest: sha256:21a3deaa0d32a8057914f36584b5288d2e5ecc984380bc0118285c70fa8c9300
+Status: Downloaded newer image for alpine:latest
+a15db6bf8165
+[node1] (local) root@192.168.0.8 ~
+$  docker container ls --all
+CONTAINER ID   IMAGE     COMMAND      CREATED         STATUS                     PORTS   NAMES
+a15db6bf8165   alpine    "hostname"   5 seconds ago   Exited (0) 3 seconds ago   awesome_black
+[node1] (local) root@192.168.0.8 ~
+$ docker container ls --all
+CONTAINER ID   IMAGE     COMMAND      CREATED          STATUS                      PORTS     NAMES
+a15db6bf8165   alpine    "hostname"   13 seconds ago   Exited (0) 12 seconds ago     awesome_black
+[node1] (local) root@192.168.0.8 ~
+$  docker container run --interactive --tty --rm ubuntu bash
+Unable to find image 'ubuntu:latest' locally
+latest: Pulling from library/ubuntu
+7b1a6ab2e44d: Pull complete
+Digest: sha256:626ffe58f6e7566e00254b638eb7e0f3b11d4da9675088f4781a50ae288f3322
+Status: Downloaded newer image for ubuntu:latest
+root@cd239b35b292:/# ls /
+bin   dev  home  lib32  libx32  mnt  proc  run   srv  tmp  var
+boot  etc  lib   lib64  media   opt  root  sbin  sys  usr
+root@cd239b35b292:/# ls /
+bin   dev  home  lib32  libx32  mnt  proc  run   srv  tmp  var
+boot  etc  lib   lib64  media   opt  root  sbin  sys  usr
+root@cd239b35b292:/# ps aux
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root         1  0.2  0.0   4108  3464 pts/0    Ss   04:24   0:00 bash
+root        12  0.0  0.0   5896  2864 pts/0    R+   04:24   0:00 ps aux
+root@cd239b35b292:/# cat /etc/issue
+Ubuntu 20.04.3 LTS \n \l
+
+root@cd239b35b292:/#  exit
+exit
+[node1] (local) root@192.168.0.8 ~
+$ exit
+logout
+###############################################################
+#                          WARNING!!!!                        #
+# This is a sandbox environment. Using personal credentials   #
+# is HIGHLY! discouraged. Any consequences of doing so are    #
+# completely the user's responsibilites.                      #
+#                                                             #
+# The PWD team.                                               #
+###############################################################
+[node1] (local) root@192.168.0.8 ~
+$ cat /etc/issue
+Welcome to Alpine Linux 3.12
+Kernel \r on an \m (\l)
+
+[node1] (local) root@192.168.0.8 ~
+$ docker container run \
+>  --detach \
+>  --name mydb \
+>  -e MYSQL_ROOT_PASSWORD=my-secret-pw \
+>  mysql:latest
+Unable to find image 'mysql:latest' locally
+latest: Pulling from library/mysql
+72a69066d2fe: Pull complete
+93619dbc5b36: Pull complete
+99da31dd6142: Pull complete
+626033c43d70: Pull complete
+37d5d7efb64e: Pull complete
+ac563158d721: Pull complete
+d2ba16033dad: Pull complete
+688ba7d5c01a: Pull complete
+00e060b6d11d: Pull complete
+1c04857f594f: Pull complete
+4d7cfa90e6ea: Pull complete
+e0431212d27d: Pull complete
+Digest: sha256:e9027fe4d91c0153429607251656806cc784e914937271037f7738bd5b8e7709
+Status: Downloaded newer image for mysql:latest
+6c64f225a8bcee853e442e40e00c5196062ab97f3d400f17a01aea1f0b5fe6df
+[node1] (local) root@192.168.0.8 ~
+$  docker container ls
+CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS         PORTS                 NAMES
+6c64f225a8bc   mysql:latest   "docker-entrypoint.s…"   2 seconds ago   Up 2 seconds   3306/tcp, 33060/tcp   mydb
+[node1] (local) root@192.168.0.8 ~
+$ docker container ls
+CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS         PORTS                 NAMES
+6c64f225a8bc   mysql:latest   "docker-entrypoint.s…"   9 seconds ago   Up 8 seconds   3306/tcp, 33060/tcp   mydb
+[node1] (local) root@192.168.0.8 ~
+$ docker container logs mydb
+2021-12-22 04:25:48+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.0.27-1debian10 started.
+2021-12-22 04:25:48+00:00 [Note] [Entrypoint]: Switching to dedicated user 'mysql'
+2021-12-22 04:25:48+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.0.27-1debian10 started.
+2021-12-22 04:25:48+00:00 [Note] [Entrypoint]: Initializing database files
+2021-12-22T04:25:48.745209Z 0 [System] [MY-013169] [Server] /usr/sbin/mysqld (mysqld 8.0.27) initializing of server in progress as process 42
+2021-12-22T04:25:48.754975Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2021-12-22T04:25:49.122176Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2021-12-22T04:25:50.185314Z 0 [Warning] [MY-013746] [Server] A deprecated TLS version TLSv1 is enabled for channel mysql_main
+2021-12-22T04:25:50.185403Z 0 [Warning] [MY-013746] [Server] A deprecated TLS version TLSv1.1 is enabled for channel mysql_main
+2021-12-22T04:25:50.262282Z 6 [Warning] [MY-010453] [Server] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
+2021-12-22 04:25:53+00:00 [Note] [Entrypoint]: Database files initialized
+2021-12-22 04:25:53+00:00 [Note] [Entrypoint]: Starting temporary server
+2021-12-22T04:25:53.563799Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.27) starting as process 91
+2021-12-22T04:25:53.593609Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2021-12-22T04:25:53.812670Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2021-12-22T04:25:54.088103Z 0 [Warning] [MY-013746] [Server] A deprecated TLS version TLSv1 is enabled for channel mysql_main
+2021-12-22T04:25:54.088163Z 0 [Warning] [MY-013746] [Server] A deprecated TLS version TLSv1.1 is enabled for channel mysql_main
+2021-12-22T04:25:54.089905Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2021-12-22T04:25:54.090066Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2021-12-22T04:25:54.092041Z 0 [Warning] [MY-011810] [Server] Insecure configuration for--pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+2021-12-22T04:25:54.124832Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Socket: /var/run/mysqld/mysqlx.sock
+2021-12-22T04:25:54.124958Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready forconnections. Version: '8.0.27'  socket: '/var/run/mysqld/mysqld.sock'  port: 0  MySQL Community Server - GPL.
+2021-12-22 04:25:54+00:00 [Note] [Entrypoint]: Temporary server started.
+Warning: Unable to load '/usr/share/zoneinfo/iso3166.tab' as time zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/leap-seconds.list' as time zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/zone.tab' as time zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/zone1970.tab' as time zone. Skipping it.
+
+2021-12-22 04:25:58+00:00 [Note] [Entrypoint]: Stopping temporary server
+2021-12-22T04:25:58.076945Z 10 [System] [MY-013172] [Server] Received SHUTDOWN from user root. Shutting down mysqld (Version: 8.0.27).
+2021-12-22T04:25:59.634214Z 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.27)  MySQL Community Server - GPL.
+2021-12-22 04:26:00+00:00 [Note] [Entrypoint]: Temporary server stopped
+
+2021-12-22 04:26:00+00:00 [Note] [Entrypoint]: MySQL init process done. Ready for startup.
+
+2021-12-22T04:26:00.430135Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.27) starting as process 1
+2021-12-22T04:26:00.442881Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2021-12-22T04:26:00.684637Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2021-12-22T04:26:00.976570Z 0 [Warning] [MY-013746] [Server] A deprecated TLS version TLSv1 is enabled for channel mysql_main
+2021-12-22T04:26:00.976625Z 0 [Warning] [MY-013746] [Server] A deprecated TLS version TLSv1.1 is enabled for channel mysql_main
+2021-12-22T04:26:00.977849Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2021-12-22T04:26:00.977923Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2021-12-22T04:26:00.979690Z 0 [Warning] [MY-011810] [Server] Insecure configuration for--pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+2021-12-22T04:26:01.015659Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Bind-address: '::' port: 33060, socket: /var/run/mysqld/mysqlx.sock
+2021-12-22T04:26:01.016070Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready forconnections. Version: '8.0.27'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server - GPL.
+[node1] (local) root@192.168.0.8 ~
+$ docker container top mydb
+PID                 USER                TIME                COMMAND
+729                 999                 0:01                mysqld
+[node1] (local) root@192.168.0.8 ~
+$ docker exec -it mydb \
+>  mysql --user=root --password=$MYSQL_ROOT_PASSWORD --version
+mysql: [Warning] Using a password on the command line interface can be insecure.
+mysql  Ver 8.0.27 for Linux on x86_64 (MySQL Community Server - GPL)
+[node1] (local) root@192.168.0.8 ~
+$ docker exec -it mydb sh
+# mysql --user=root --password=$MYSQL_ROOT_PASSWORD --version
+mysql: [Warning] Using a password on the command line interface can be insecure.
+mysql  Ver 8.0.27 for Linux on x86_64 (MySQL Community Server - GPL)
+#  exit
+[node1] (local) root@192.168.0.8 ~
+$ cd ~/linux_tweet_app
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$ cat Dockerfile
+FROM nginx:latest
+
+COPY index.html /usr/share/nginx/html
+COPY linux.png /usr/share/nginx/html
+
+EXPOSE 80 443
+
+CMD ["nginx", "-g", "daemon off;"]
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$  echo $DOCKERID
+
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$  echo $DOCKERID
+
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$  echo $DOCKERID
+
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$  echo $DOCKERID
+
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$ echo amarjithtg
+amarjithtg
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$ docker image build --tag $DOCKERID/linux_tweet_app:1.0 .
+invalid argument "/linux_tweet_app:1.0" for "-t, --tag" flag: invalid reference format
+See 'docker image build --help'.
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$ docker container run \
+>  --detach \
+>  --publish 80:80 \
+>  --name linux_tweet_app \
+>  $DOCKERID/linux_tweet_app:1.0
+docker: invalid reference format.
+See 'docker run --help'.
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$ docker container rm --force linux_tweet_app
+Error: No such container: linux_tweet_app
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$  docker container run \
+>  --detach \
+>  --publish 80:80 \
+>  --name linux_tweet_app \
+>  --mount type=bind,source="$(pwd)",target=/usr/share/nginx/html \
+>  $DOCKERID/linux_tweet_app:1.0
+docker: invalid reference format.
+See 'docker run --help'.
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$ cp index-new.html index.html
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$  docker rm --force linux_tweet_app
+Error: No such container: linux_tweet_app
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$  docker rm --force linux_tweet_app
+Error: No such container: linux_tweet_app
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$ docker rm --force linux_tweet_app
+Error: No such container: linux_tweet_app
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$  docker container run \
+>  --detach \
+>  --publish 80:80 \
+>  --name linux_tweet_app \
+>  $DOCKERID/linux_tweet_app:1.0
+docker: invalid reference format.
+See 'docker run --help'.
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$ docker container run \
+>  --detach \
+>  --publish 80:80 \
+>  --name linux_tweet_app \
+>  $DOCKERID/linux_tweet_app:1.0
+docker: invalid reference format.
+See 'docker run --help'.
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$ docker rm --force linux_tweet_app
+Error: No such container: linux_tweet_app
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$ docker image build --tag $DOCKERID/linux_tweet_app:2.0 .
+invalid argument "/linux_tweet_app:2.0" for "-t, --tag" flag: invalid reference format
+See 'docker image build --help'.
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$ docker image ls
+REPOSITORY   TAG       IMAGE ID       CREATED        SIZE
+mysql        latest    3218b38490ce   26 hours ago   516MB
+alpine       latest    c059bfaa849c   3 weeks ago    5.59MB
+ubuntu       latest    ba6acccedd29   2 months ago   72.8MB
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$ docker container run \
+>  --detach \
+>  --publish 80:80 \
+>  --name linux_tweet_app \
+>  $DOCKERID/linux_tweet_app:2.0
+docker: invalid reference format.
+See 'docker run --help'.
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$ docker container run \
+>  --detach \
+>  --publish 8080:80 \
+>  --name old_linux_tweet_app \
+>  $DOCKERID/linux_tweet_app:1.0
+docker: invalid reference format.
+See 'docker run --help'.
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$ docker image ls -f reference="$DOCKERID/*"
+REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$ docker login
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
+Username: amarjithtg
+Password:
+Error response from daemon: Get https://registry-1.docker.io/v2/: unauthorized: incorrect username or password
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$ docker image push $DOCKERID/linux_tweet_app:1.0
+invalid reference format
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$ docker image push $DOCKERID/linux_tweet_app:2.0
+invalid reference format
+[node1] (local) root@192.168.0.8 ~/linux_tweet_app
+$  docker login
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
+Username: amarjithtg
